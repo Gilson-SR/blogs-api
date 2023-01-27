@@ -1,3 +1,5 @@
+const jwt = require('../utils/jwt');
+
 const loginValidation = (request, response, next) => {
     const { email, password } = request.body;
     if (!email || !password) {
@@ -8,6 +10,25 @@ const loginValidation = (request, response, next) => {
     next();
 };
 
+const tokenValidation = (request, response, next) => {
+    const token = request.header('Authorization');
+
+    if (!token) {
+        response.status(401).json({ message: 'Token not found' });
+        return;
+    }
+
+    const { error } = jwt.tokenValidation(token);
+
+    if (error) {
+        response.status(401).json({ message: 'Expired or invalid token' });
+        return;
+    }
+
+    next();
+};
+
 module.exports = {
     loginValidation,
+    tokenValidation,
 };
