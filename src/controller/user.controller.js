@@ -1,11 +1,18 @@
 const userService = require('../service/user.service');
 
-const create = async (req, res) => {
-  const { type, message } = await userService.create(req.body);
-  if (type !== 201) return res.status(type).json({ message });
-  res.status(type).json(message);
+const insertUser = async (request, response) => {
+  const user = request.body;
+  const { token, error } = await userService.insertUser(user);
+  if (error) return response.status(409).json({ message: error });
+  response.status(201).json(token);
+};
+
+const getAllUser = async (request, response) => {
+  const users = await userService.getAllUser();
+  response.status(200).json(users);
 };
 
 module.exports = {
-  create,
+  insertUser,
+  getAllUser,
 };
