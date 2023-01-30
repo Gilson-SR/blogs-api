@@ -16,13 +16,24 @@ const insertUser = async ({ displayName, email, password, image }) => {
 };
 
 const getAllUser = async () => {
-  const users = await User.findAll({
-      attributes: { exclude: ['password'] },
-  });
-  return users;
+    const users = await User.findAll({
+        attributes: { exclude: ['password'] },
+    });
+    return users;
+};
+
+const getUserById = async (id) => {
+    const user = await User.findByPk(id, {
+        attributes: { exclude: ['password'] },
+    });
+
+    if (user === null) return { error: 'User does not exist', user: null };
+
+    return { error: null, user };
 };
 
 module.exports = {
     insertUser,
     getAllUser,
+    getUserById,
 };

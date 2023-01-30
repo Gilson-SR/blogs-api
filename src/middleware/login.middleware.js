@@ -18,13 +18,14 @@ const tokenValidation = (request, response, next) => {
         return;
     }
 
-    const { error } = jwt.tokenValidation(token);
-
+    const { error, decrypted } = jwt.tokenValidation(token);
+    
     if (error) {
         response.status(401).json({ message: 'Expired or invalid token' });
         return;
     }
-
+    
+    request.body.userEmail = decrypted.email;
     next();
 };
 
