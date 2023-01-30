@@ -1,12 +1,13 @@
 const express = require('express');
 const categoryController = require('../controller/category.controller');
 
-const { tokenValidation } = require('../middleware/login.middleware');
+const loginMiddleware = require('../middleware/login.middleware');
 const categoryMiddleware = require('../middleware/category.middleware');
 
 const router = express.Router();
 
-router.post('/categories', tokenValidation, categoryMiddleware.categoryValidation, 
+router.post('/categories', loginMiddleware.tokenValidation, categoryMiddleware.categoryValidation, 
 categoryController.insertCategory);
+router.get('/categories', loginMiddleware.tokenValidation, categoryController.getAllCategories);
 
 module.exports = router;

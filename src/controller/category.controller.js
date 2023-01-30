@@ -9,6 +9,12 @@ const insertCategory = async (request, response) => {
     });
 };
 
+const getAllCategories = async (_request, response) => {
+    const { categories } = await categoryService.getAllCategories();
+    response.status(200).json(categories);
+};
+
 module.exports = {
     insertCategory,
+    getAllCategories,
 };
