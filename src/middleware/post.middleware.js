@@ -9,6 +9,18 @@ const postValidation = (request, response, next) => {
     next();
 };
 
+const updateValidation = (request, response, next) => {
+    const { title, content } = request.body;
+
+    if (!title || !content) {
+        response.status(400).json({ message: 'Some required fields are missing' });
+        return;
+    }
+
+    next();
+};
+
 module.exports = {
     postValidation,
+    updateValidation,
 };

@@ -15,4 +15,17 @@ router.post(
   postController.insertPost,
 );
 
+router.get(
+  '/post/:id',
+  loginMiddleware.tokenValidation,
+  postController.getPostById,
+);
+
+router.put(
+  '/post/:id',
+  loginMiddleware.tokenValidation,
+  postMiddleware.updateValidation,
+  postController.postUpdate,
+);
+
 module.exports = router;
