@@ -32,11 +32,11 @@ const getPostById = async (request, response) => {
 const postUpdate = async (request, response) => {
     const { id } = request.params;
     const { title, content, userEmail } = request.body;
-    const { error, updatedPost } = await postService.postUpdate({ title, content, id, userEmail });
+    const { error, currentPost } = await postService.postUpdate({ title, content, id, userEmail });
 
     if (error) return response.status(401).json({ message: error });
 
-    response.status(200).json(updatedPost);
+    response.status(200).json(currentPost);
 };
 
 module.exports = {
